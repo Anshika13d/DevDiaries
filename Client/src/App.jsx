@@ -13,6 +13,7 @@ import axios from 'axios';
 import { UserContext } from './UserContext';
 import CreatePost from './pages/CreatePost';
 import PostPage from './pages/PostPage';
+import EditPost from './pages/EditPost';
 
 function App() {
   const {setUserInfo, userInfo} = useContext(UserContext);
@@ -65,8 +66,22 @@ function App() {
             <div className='flex space-x-5'>
               {username && (
                 <>
+                <motion.button
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.1 },
+                      }}
+                    className='border rounded-md p-1 w-40 bg-teal-900 text-white'>
                   <Link to='/create'> Create new post</Link>
+                  </motion.button>
+                  <motion.button
+                      whileHover={{
+                        scale: 1.05,
+                        transition: { duration: 0.1 },
+                      }}
+                    className='border rounded-md p-1 w-20 bg-teal-900 text-white'>
                   <a className='cursor-pointer' onClick={logout}>Logout</a>
+                  </motion.button>
                 </>
               )}
               {!username && (
@@ -107,6 +122,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/create' element={<CreatePost />} />
         <Route path='/post/:id' element={<PostPage />} />
+        <Route path='/edit/:id' element={<EditPost />} />
       </Routes>
 
 

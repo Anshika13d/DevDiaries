@@ -19,7 +19,7 @@ function Card({_id, title, summary, cover, content, createdAt, author}) {
                 <div className=' py-2'>
                   <ul>
                     <li className='text-gray-600 text-sm'>By: {author.username}</li>
-                    <time className='text-gray-500 text-sm' datetime="">{format(createdAt, 'd-MM-yyy, HH:MM')}</time>
+                    <time className='text-gray-500 text-sm' dateTime="">{format(createdAt, 'd-MM-yyy, HH:mm')}</time>
                   </ul>
                 </div>
                 <p className='text-sm line-clamp-3'>{summary}</p>

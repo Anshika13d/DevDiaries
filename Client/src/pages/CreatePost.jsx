@@ -1,26 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+
 import { Navigate } from 'react-router-dom';
 import {motion} from 'framer-motion'
+import Editor from '../components/Editor';
 
-const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image'],
-      ['clean']
-    ],
-  }
-
-  const formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image'
-  ]
 
 
 function CreatePost() {
@@ -88,11 +72,7 @@ function CreatePost() {
         />
         
         <div className="border border-gray-300 rounded-md overflow-hidden">
-          <ReactQuill 
-            value={content} 
-            onChange={newVal => setContent(newVal)}
-            modules={modules} 
-            formats={formats} />
+        <Editor onChange={setContent} value={content} />
         </div>
         <button
           type="submit"
