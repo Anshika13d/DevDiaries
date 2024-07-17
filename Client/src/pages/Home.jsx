@@ -7,26 +7,20 @@ import 'aos/dist/aos.css';
 import create from '../assets/create.jpeg'
 import explore from '../assets/explore.jpg'
 import learn from '../assets/learn.jpg'
+import side from '../assets/side.png'
+import { Link, Route, Routes } from 'react-router-dom';
+import Explore from './Explore';
 
 function Home() {
-  const[posts, setPosts] = useState([]);
+  //const[posts, setPosts] = useState([]);
 
   useEffect(() => {
     AOS.init({
       duration: 1000,
       offset: 200, // offset (in px) from the original trigger point
       easing: 'ease-in-out', // AOS easing options
-       // whether animation should happen only once - while scrolling down
     });
   }, []);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/post')
-      .then(res => {setPosts(res.data)})
-      .catch(error => {
-        console.error("Error fetching posts:", error);
-      });
-  }, [])
 
   return (
     <>
@@ -56,42 +50,66 @@ function Home() {
       </div>
     </div>
 
-    <div className='container mx-auto text-center'>
+    <div className='grid grid-cols-2  justify-items-center'>
+      
+      <div className='container text-center w-full'>
       <div
         data-aos="slide-right" 
-        className='mb-24 flex items-center space-x-40 bg-teal-800 p-8 sm:p-10 md:p-22'
+        className='mb-20 flex items-center space-x-20 bg-teal-800 p-8 sm:p-22 md:p-22'
+        style={{ minHeight: '10rem' }} // Adjust the height as needed
       >
-        <img className='flex h-60' src={create} alt="" />
-        <h1 className='text-4xl font-bold text-white'>
+        <img className='h-60' src={create} alt="Create" />
+        <h1 className='text-4xl font-bold text-white min-h-full flex items-center'>
+          Create.
+        </h1>
+      </div>
+
+        <div
+          data-aos="slide-right"
+          className='mb-20 flex items-center justify-end space-x-20 bg-teal-800 p-8 sm:p-10 md:p-22' 
+        >
+          <h1 className='text-4xl font-bold text-white'>
+            Explore.
+          </h1>
+          <img className='h-60' src={explore} alt="Explore" />
+        </div>
+
+        <div
+          data-aos="slide-right" 
+          className='mb-20 flex items-center space-x-20 bg-teal-800 p-8 sm:p-10 md:p-22'
+        >
+          <img className='w-96 h-60' src={learn} alt="Learn" />
+          <h1 className='text-4xl font-bold text-white'>
+            Learn.
+          </h1>
+        </div>
+
         
-          Create.</h1>
       </div>
-
-      <div
-        data-aos="slide-right"
-        className='mb-24 flex items-center justify-end space-x-40 bg-teal-800 p-8 sm:p-10 md:p-22' 
-      >
-        
-        <h1 className='text-4xl font-bold text-white'>Explore.</h1>
-        <img className='flex h-60' src={explore} alt="" />
+      <div className="container flex justify-center items-center">
+        <img className='h-screen' src={side} alt="Create" />
       </div>
-
-      <div
-        data-aos="slide-right" 
-        className='mb-28 flex items-center space-x-40 bg-teal-800 p-8 sm:p-10 md:p-22'
-      >
-        <img className='flex w-96 h-60' src={learn} alt="" />
-        <h1 className='text-4xl font-bold text-white'>Learn.</h1>
-      </div>
-
-      <img src={create} alt="" />
     </div>
 
-      <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 justify-items-center'>
-        {posts.length > 0 && posts.map(post => (
-          <Card key={post._id} {...post} />
-        ))}
-      </div>
+    <motion.button
+        whileHover={{
+          scale: 1.05,
+          transition: { duration: 0.1 },
+        }}
+        className='border mb-28 flex justify-center items-center rounded-md mx-auto font-bold w-80 h-20 bg-teal-900 text-white'
+      >
+        <Link to='/explore' className='flex justify-center items-center text-xl w-full h-full'>
+          Explore Our Latest Blogs
+        </Link>
+      </motion.button>
+
+        <div>
+          <h1 className='text-4xl text-teal-950 text-center p-10 font-bold'>Promote Your Blogs!</h1>
+        </div>
+
+      <Routes>
+        <Route path='/explore' element={<Explore/>} />
+      </Routes>
     </>
   );
 }

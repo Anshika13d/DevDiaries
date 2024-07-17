@@ -56,6 +56,7 @@ app.post('/login', async (req, res)  =>{
     if (!userDoc) {
         return res.status(400).json({ message: 'User not found' });
     }
+    
 
     const isOk = await bcrypt.compare(password, userDoc.password);
     
@@ -170,6 +171,21 @@ app.get('/post/:id', async (req, res) => {
 app.get('/edit/:id', async (req, res) => {
     const {id} = req.params;
     res.json(id);
+})
+
+app.get('/myitems', async (req, res) => {
+    const {token} = req.cookies
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) return res.status(401).json({ error: 'Unauthorized' });
+        
+        const posts = await Post.find({author: info.id}).populate('author', ['username'])
+        if(posts.length > 0){
+            res.json(posts)
+        }
+        else{
+            res.json('nothing to show')
+        }
+    })
 })
 
 
